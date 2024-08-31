@@ -82,7 +82,7 @@ const Weather = () => {
         <>
             <div className="  bg-pink-950 flex justify-center">
                 <h1 className="text-4xl text-pink-600 font-bold p-4 text-center">Live Weather App</h1>
-                <img className=" w-[100px] h-[70px] " src="src/weather.png" alt="" />
+                <img className=" w-[100px] h-[70px] " src="public/weather.png" alt="" />
             </div>
             <div className=" flex justify-center items-center mt-6">
                 <input

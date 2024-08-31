@@ -10,22 +10,22 @@ const Weather = () => {
         console.log("chal gayaa")
     }, [])
 
+
     const getWeather = () => {
         const weatherResult = document.getElementById('weatherResult');
         fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=4f62b4511aae25559f2ae77ae94ab77a&units=metric`)
-            .then((data) => data.json())
+            .then((res) => res.json())
             .then((data) => {
+
                 const sunset = (data.sys.sunset) * 1000;
                 const getsunset = new Date(sunset).toLocaleTimeString();
-
                 const sunrise = (data.sys.sunrise) * 1000;
                 const getsunrise = new Date(sunrise).toLocaleTimeString();
                 const date = new Date().toLocaleTimeString();
 
-
                 weatherResult.innerHTML =
-                    `<h1 class=" text-3xl font-semibold font-serif underline text-center">${data.name}</h1>
-                                    <h1 class=" text-[18px] font-serif "><b>Weather:</b> ${data.weather[0].description}</h1>
+                    `<h1 class=" text-3xl font-semibold font-serif underline text-center">${data.name}, ${data.sys.country}</h1>
+                                    <h1 class=" text-[18px] font-serif capitalize"><b>Weather:</b> ${data.weather[0].description}</h1>
                 <h1 class=" text-[18px] font-serif "><b>Temprature:</b> ${data.main.temp}°C</h1>
                 <h1 class=" text-[18px] font-serif "><b>Feels:</b> ${data.main.feels_like}°C</h1>
                 <h1 class=" text-[18px] font-serif "><b>Humidity:</b> ${data.main.humidity}%</h1>
@@ -64,14 +64,13 @@ const Weather = () => {
                     style.color = 'red'
                 }
                 if (data.main.temp > 40) {
-                    document.getElementById('temp').style.color = 'red'
+                    style.color = 'red'
                 }
             })
-
-
-
+        // .catch(error => {
+        //     weatherResult.innerHTML = `<p class=' text-red-600 text-2xl font-serif font-bold underline'>${error.message}</p>`;
+        // })
     }
-
 
     const temp = Math.floor(currentWeather?.main?.temp);
     const feelsLike = Math.round(currentWeather?.main?.feels_like);
@@ -87,7 +86,7 @@ const Weather = () => {
             </div>
             <div className=" flex justify-center items-center mt-6">
                 <input
-                    className=" border-2 border-pink-950 bg-none p-3 w-[35%] rounded-lg outline-none"
+                    className=" border-2 border-pink-950 bg-none p-3 w-[35%] rounded-lg outline-none placeholder: font-serif"
                     type="search" placeholder="Search City Name"
                     onChange={(e) => setCity(e.target.value)}
                     id="input"

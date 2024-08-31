@@ -15,27 +15,62 @@ const Weather = () => {
         fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=4f62b4511aae25559f2ae77ae94ab77a&units=metric`)
             .then((data) => data.json())
             .then((data) => {
-                const sunset= (data.sys.sunset) * 1000;
-                const getsunset= new Date(sunset).toLocaleTimeString();
+                const sunset = (data.sys.sunset) * 1000;
+                const getsunset = new Date(sunset).toLocaleTimeString();
 
-                const sunrise= (data.sys.sunrise) * 1000;
-                const getsunrise= new Date(sunrise).toLocaleTimeString();
+                const sunrise = (data.sys.sunrise) * 1000;
+                const getsunrise = new Date(sunrise).toLocaleTimeString();
+                const date = new Date().toLocaleTimeString();
+
 
                 weatherResult.innerHTML =
-                `<h1 class=" text-3xl font-semibold font-serif underline text-center">${data.name}</h1>
-                <h1 class=" text-[18px] font-serif ">Temprature: ${data.main.temp}°C</h1>
-                <h1 class=" text-[18px] font-serif ">Feels: ${data.main.feels_like}°C</h1>
-                <h1 class=" text-[18px] font-serif ">Weather: ${data.weather[0].description}</h1>
-                <h1 class=" text-[18px] font-serif ">Humidity: ${data.main.humidity}%</h1>
-                <h1 class=" text-[18px] font-serif ">Wind Speed: ${data.wind.speed}%</h1>
-                <h1 class=" text-[18px] font-serif ">Clouds: ${data.clouds.all}%</h1>
-                <h1 class=" text-[18px] font-serif ">Sunset: ${getsunrise}</h1>
-                <h1 class=" text-[18px] font-serif ">Sunset: ${getsunset}</h1>
+                    `<h1 class=" text-3xl font-semibold font-serif underline text-center">${data.name}</h1>
+                                    <h1 class=" text-[18px] font-serif "><b>Weather:</b> ${data.weather[0].description}</h1>
+                <h1 class=" text-[18px] font-serif "><b>Temprature:</b> ${data.main.temp}°C</h1>
+                <h1 class=" text-[18px] font-serif "><b>Feels:</b> ${data.main.feels_like}°C</h1>
+                <h1 class=" text-[18px] font-serif "><b>Humidity:</b> ${data.main.humidity}%</h1>
+                <h1 class=" text-[18px] font-serif "><b>Wind Speed:</b> ${data.wind.speed}%</h1>
+                <h1 class=" text-[18px] font-serif "><b>Clouds:</b> ${data.clouds.all}%</h1>
+                <h1 class=" text-[18px] font-serif "><b>Sunrise:</b> ${getsunrise}</h1>
+                <h1 class=" text-[18px] font-serif "><b>Sunset:</b>: ${getsunset}</h1>
                 `
                 setCurrentWeather(data)
-            })
-    }
+                const weatherMain = data.weather[0].main.toLowerCase();
+                if (weatherMain.includes('clear') || weatherMain.includes('sun')) {
+                    document.body.style.backgroundImage = "url('Images/clearback.webp')";
+                } else if (weatherMain.includes('cloud')) {
+                    document.body.style.backgroundImage = "url('Images/clouds.jpg')";
+                } else if (weatherMain.includes('rainy') || weatherMain.includes('rain')) {
+                    document.body.style.backgroundImage = "url('Images/rainybg.jpg')";
+                } else if (weatherMain.includes('snowy')) {
+                    document.body.style.backgroundImage = "url('Images/snowbg.jpg')";
+                } else if (weatherMain.includes('haze') || weatherMain.includes('smoke') || weatherMain.includes('mist')) {
+                    document.body.style.backgroundImage = "url('Images/hazebg.webp')";
+                } else if (weatherMain.includes('thunderstorm')) {
+                    document.body.style.backgroundImage = "url('Images/thunderstormbg.jpeg')";
+                } else {
+                    // document.body.style.backgroundImage = "url('default.jpg')";
+                }
 
+                if (getsunset >= date) {
+                    if (weatherMain.includes('clear') || weatherMain.includes('sun')) {
+                        document.body.style.backgroundImage = "url('Images/night.webp')";
+                    } else if (weatherMain.includes('cloud')) {
+                        document.body.style.backgroundImage = "url('Images/nightcloudy.jpg')"
+                    }
+                }
+
+                if (data.main.feels_like > 40) {
+                    style.color = 'red'
+                }
+                if (data.main.temp > 40) {
+                    document.getElementById('temp').style.color = 'red'
+                }
+            })
+
+
+
+    }
 
 
     const temp = Math.floor(currentWeather?.main?.temp);
@@ -64,7 +99,7 @@ const Weather = () => {
                 </button>
             </div>
 
-            <div className="w-[50%] bg-slate-400 flex justify-center items-center m-auto rounded-lg mt-4 text-center">
+            <div className=" w-[50%] flex justify-center items-center m-auto rounded-lg mt-4 text-center">
                 <div id="weatherResult">
 
                 </div>

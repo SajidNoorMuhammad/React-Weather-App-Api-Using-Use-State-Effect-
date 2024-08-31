@@ -1,5 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
+import image from 'public/Images/weather.png';
 const Weather = () => {
 
     const [currentWeather, setCurrentWeather] = useState({ weather: [] });

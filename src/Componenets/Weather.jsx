@@ -1,6 +1,5 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import weather from "public";
 const Weather = () => {
 
     const [currentWeather, setCurrentWeather] = useState({ weather: [] });

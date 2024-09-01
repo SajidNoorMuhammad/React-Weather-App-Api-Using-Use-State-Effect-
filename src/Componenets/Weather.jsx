@@ -1,8 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import image from 'public/Images/weather.png';
 const Weather = () => {
-
     const [currentWeather, setCurrentWeather] = useState({ weather: [] });
     const [city, setCity] = useState('')
 
@@ -53,7 +51,7 @@ const Weather = () => {
                     // document.body.style.backgroundImage = "url('default.jpg')";
                 }
 
-                if (getsunset >= date) {
+                if (getsunset <= date) {
                     if (weatherMain.includes('clear') || weatherMain.includes('sun')) {
                         document.body.style.backgroundImage = "url('Images/night.webp')";
                     } else if (weatherMain.includes('cloud')) {
@@ -61,23 +59,11 @@ const Weather = () => {
                     }
                 }
 
-                if (data.main.feels_like > 40) {
-                    style.color = 'red'
-                }
-                if (data.main.temp > 40) {
-                    style.color = 'red'
-                }
             })
         // .catch(error => {
         //     weatherResult.innerHTML = `<p class=' text-red-600 text-2xl font-serif font-bold underline'>${error.message}</p>`;
         // })
     }
-
-    const temp = Math.floor(currentWeather?.main?.temp);
-    const feelsLike = Math.round(currentWeather?.main?.feels_like);
-    const weatherCondtion = currentWeather?.weather[0]?.main;
-    const name = currentWeather?.name;
-
 
     return (
         <>
